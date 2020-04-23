@@ -25,8 +25,13 @@
         {{item}}
       </div>
       <el-button size="small"
-                 plain>登陆/注册</el-button>
+                 plain
+                 @click="drawer = true">登陆/注册</el-button>
     </el-col>
+    <el-drawer title="登陆/注册" size="75%"
+               :visible.sync="drawer">
+      <span>我来啦!</span>
+    </el-drawer>
   </el-row>
 </template>
 
@@ -40,22 +45,11 @@ export default {
   },
   data () {
     return {
-      currentIndex: 0
+      currentIndex: 0,
+      drawer: false
     }
   },
   methods: {
-    // handleIndex () {
-    //   this.$router.push('/index').catch(err => err)
-    // },
-    // handleCancer () {
-    //   this.$router.push('/cancer').catch(err => err)
-    // },
-    // handleRare () {
-    //   this.$router.push('/rare').catch(err => err)
-    // },
-    // handleAbout () {
-    //   this.$router.push('/about').catch(err => err)
-    // }
     handle (e) {
       switch (e) {
         case 0:

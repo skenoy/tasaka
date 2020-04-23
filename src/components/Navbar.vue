@@ -7,9 +7,9 @@
             :offset="8"
             class="rightbar">
       <div @click="handleIndex">首页</div>
-      <div>肿瘤</div>
-      <div>罕见病</div>
-      <div>关于</div>
+      <div @click="handleCancer">肿瘤</div>
+      <div @click="handleRare">罕见病</div>
+      <div @click="handleAbout">关于</div>
       <el-button size="small"
                  plain>登陆/注册</el-button>
     </el-col>
@@ -19,8 +19,17 @@
 <script>
 export default {
   methods: {
-    handleIndex() {
-      console.log('aaaaa')
+    handleIndex () {
+      this.$router.push('/index').catch(err => err)
+    },
+    handleCancer () {
+      this.$router.push('/cancer').catch(err => err)
+    },
+    handleRare () {
+      this.$router.push('/rare').catch(err => err)
+    },
+    handleAbout () {
+      this.$router.push('/about').catch(err => err)
     }
   }
 }

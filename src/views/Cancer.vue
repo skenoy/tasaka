@@ -1,12 +1,12 @@
 <template>
   <div>
-    index
+    cancer
   </div>
 </template>
 
 <script>
-
 export default {
+
 }
 </script>
 

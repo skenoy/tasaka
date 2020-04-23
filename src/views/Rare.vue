@@ -1,12 +1,12 @@
 <template>
   <div>
-    index
+    rare
   </div>
 </template>
 
 <script>
-
 export default {
+
 }
 </script>
 

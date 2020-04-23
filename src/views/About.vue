@@ -1,12 +1,12 @@
 <template>
   <div>
-    index
+    about
   </div>
 </template>
 
 <script>
-
 export default {
+
 }
 </script>
 

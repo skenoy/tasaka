@@ -2,6 +2,7 @@
   <div class="index">
     <div class="main">肿瘤/罕见病治疗案例</div>
     <div class="sub">来源--知乎-杀生丸--解读案例</div>
+    <div class="sub">不对其疫情中的蠢话做评价</div>
     <div class="number">
       <div>肿瘤数据：<span>{{cancerNumberTween}}</span></div>
       <div>罕见病数据：<span>{{rareNumberTween}}</span></div>

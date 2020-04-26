@@ -1,11 +1,7 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <el-row>
-      <el-col :span='24'>
-        <router-view />
-      </el-col>
-    </el-row>
+    <router-view />
   </div>
 </template>
 
@@ -20,5 +16,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

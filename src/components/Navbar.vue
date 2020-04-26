@@ -152,6 +152,9 @@ export default {
       }
     }
   },
+  created () {
+    this.currentIndex = window.sessionStorage.getItem('idx')
+  },
   methods: {
     closeDrawer () {
       this.$refs.loginForm.resetFields()
@@ -161,20 +164,18 @@ export default {
       switch (i) {
         case 0:
           this.$router.push('/index').catch(err => err)
-          this.currentIndex = i
           break
         case 1:
           this.$router.push('/cancer').catch(err => err)
-          this.currentIndex = i
           break
         case 2:
           this.$router.push('/rare').catch(err => err)
-          this.currentIndex = i
           break
         case 3:
           this.$router.push('/about').catch(err => err)
-          this.currentIndex = i
       }
+      this.currentIndex = i
+      window.sessionStorage.setItem('idx', i)
     },
     clickLR (i) {
       if (this.lrIndex !== i) {
@@ -221,9 +222,10 @@ export default {
   justify-content: space-around;
   background-color: #455a64;
   color: #ffffff;
-  width: 100%;
-  position: sticky;
+  width: 100vw;
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 1;
 }
 .title {

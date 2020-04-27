@@ -10,7 +10,6 @@ user = Blueprint('user', __name__)
 @user.route("/validatecode", methods=['POST'])
 def validatecode():
     data = request.json['data']
-    print(data)
     emailObj = User.query.filter(User.email==data['email']).first()
     if emailObj:
         return jsonify({'msg': 'This email is exists!', 'code': 410})
@@ -27,7 +26,8 @@ def validatecode():
             vc_user.validatecode = code
             db.session.add(vc_user)
             db.session.commit()
-            email('Tasaka邮箱验证', data['email'], 'sendcode', t_validatecode=code)
+            # 单人发邮件也得是list
+            email('Tasaka邮箱验证', [data['email']], 'sendcode', t_validatecode=code)
         except:
             db.session.rollback()
             return jsonify({'msg': 'The database is error!', 'code': 420})

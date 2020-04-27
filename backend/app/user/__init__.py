@@ -31,7 +31,7 @@ def validatecode():
         except:
             db.session.rollback()
             return jsonify({'msg': 'The database is error!', 'code': 420})
-        return jsonify({'msg': 'Send email validate code！', 'code': 200})
+        return jsonify({'msg': 'Send email validate code!', 'code': 200})
 
 @user.route("/register", methods=['POST'])
 def register():

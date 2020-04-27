@@ -2,8 +2,38 @@
 from flask import Blueprint, jsonify, request, json
 from app.models import User
 from app import auth, db, app
+from uuid import uuid4
+from app.utils import email
 
 user = Blueprint('user', __name__)
+
+@user.route("/validatecode", methods=['POST'])
+def vc():
+	data = request.json['data']
+	email = User.query.filter(User.email==data['email']).first()
+	if email:
+		return jsonify({'msg': 'This email is exists!', 'code': 410})
+	else:
+		validatecode = ''
+		while 1:
+			validatecode = User.query.filter(User.validatecode==uuid4().hex).first()
+			if not validatecode:
+				break
+		try:
+			vc_user = User()
+			vc_user.email = data['email']
+			vc_user.validatecode = validatecode
+			db.session.add(vc_user)
+			db.session.commit()
+			email('Tasaka邮箱验证', data['email'], 'sendcode', validatecode=validatecode)
+		except:
+			db.session.rollback()
+			return jsonify({'msg': 'The database is error!', 'code': 411})
+		return jsonify({'msg': 'Send email validate code！', 'code': 210})
+
+	
+
+	return jsonify(resp)
 
 @user.route("/login", methods=['POST'])
 def login():
@@ -37,4 +67,4 @@ def login():
 @user.route("/check_token")
 @auth.login_required
 def token():
-    return jsonify({'code': 200, 'msg': 'Check Token Success'})
+    return jsonify({'code': 201, 'msg': 'Check Token Success'})

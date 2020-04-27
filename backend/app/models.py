@@ -11,6 +11,7 @@ from app import db, auth
 from flask import current_app, jsonify
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, BadSignature
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @auth.error_handler
 def error_handler():
@@ -32,28 +33,20 @@ class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
-    gender = db.Column(db.Integer)
-    city = db.Column(db.String(32))
-    province = db.Column(db.String(32))
-    country = db.Column(db.String(32))
-    img = db.Column(db.String(128))
-    openid = db.Column(db.String(32))
+    email = db.Column(db.String(32), index=True, unique=True)
+    password = db.Column(db.String(32))
+    validatecode = db.Column(db.String(32))
     addtime = db.Column(db.DateTime, index=True, default=datetime.now)
-
-    def to_json(self):
-        return {
-            'name': self.name,
-            'gender': self.gender,
-            'city': self.city,
-            'province': self.province,
-            'country': self.country,
-            'img': self.img,
-            'openid': self.openid,
-        }
 
     def generate_auth_token(self):
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=3600)
-        return str(s.dumps({'openid': self.openid}), encoding='utf-8')
+        return str(s.dumps({'vc': self.validatecode}), encoding='utf-8')
+    
+    def hash_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, pwd):
+        return check_password_hash(self.password, pwd)
 
 
 if __name__ == '__main__':

@@ -1,11 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPTokenAuth
+from flask_cors import CORS
+from flask_mail import Mail
 
 app = Flask(__name__)
+CORS(app)
 
 app.config.from_pyfile('./config.py')
 
+mail = Mail(app)
 db = SQLAlchemy(app)
 
 auth = HTTPTokenAuth(scheme='Token')

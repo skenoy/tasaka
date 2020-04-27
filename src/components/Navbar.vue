@@ -196,8 +196,11 @@ export default {
         // this.$router.push('/home')
       })
     },
-    validateEmail () {
+    async validateEmail () {
       if (this.registerForm.email) {
+        const data = { email: this.registerForm.email }
+        const res = await this.$http.post('user/validatecode', { data })
+        console.log(res)
         this.$message.success(`已发送验证码到${this.registerForm.email}`)
       } else {
         this.$message.warning('用户邮箱不能为空')

@@ -10,14 +10,16 @@ user = Blueprint('user', __name__)
 @user.route("/validatecode", methods=['POST'])
 def validatecode():
     data = request.json['data']
-    email = User.query.filter(User.email==data['email']).first()
-    if email:
+    print(data)
+    emailObj = User.query.filter(User.email==data['email']).first()
+    if emailObj:
         return jsonify({'msg': 'This email is exists!', 'code': 410})
     else:
         code = ''
         while 1:
-            code = User.query.filter(User.validatecode==uuid4().hex).first()
-            if not code:
+            code = uuid4().hex
+            codeObj = User.query.filter(User.validatecode==code).first()
+            if not codeObj:
                 break
         try:
             vc_user = User()
@@ -25,7 +27,7 @@ def validatecode():
             vc_user.validatecode = code
             db.session.add(vc_user)
             db.session.commit()
-            email('Tasaka邮箱验证', data['email'], 'sendcode', validatecode=code)
+            email('Tasaka邮箱验证', data['email'], 'sendcode', t_validatecode=code)
         except:
             db.session.rollback()
             return jsonify({'msg': 'The database is error!', 'code': 420})
@@ -35,20 +37,20 @@ def validatecode():
 def register():
     data = request.json['data']
     
-    code = User.query.filter(User.validatecode == data['validatecode']).first()
-    if not code:
+    codeObj = User.query.filter(User.validatecode == data['validatecode']).first()
+    if not codeObj:
         return jsonify({'msg': 'Email validate code is error!', 'code': 440})
-    email = User.query.filter(User.email == data['email']).first()
-    if not code:
+    emailObj = User.query.filter(User.email == data['email']).first()
+    if not codeObj:
         return jsonify({'msg': 'Email is error!', 'code': 450})
-    name = User.query.filter(User.name==data['name']).first()
-    if name:
+    nameObj = User.query.filter(User.name==data['name']).first()
+    if nameObj:
         return jsonify({'msg': 'name is exists!', 'code': 430})
     try:
         r_user = User()
-        r_user.name = name
-        r_user.email = email
-        r_user.validatecode = code
+        r_user.name = data['name']
+        r_user.email = data['email']
+        r_user.validatecode = data['validatecode']
         r_user.password = r_user.hash_password(data['password'])
         db.session.add(r_user)
         db.session.commit()
@@ -61,12 +63,12 @@ def register():
 def login():
     data = request.json['data']
 
-    name = User.query.filter(User.name==data['name']).first()
-    if not name:
+    nameObj = User.query.filter(User.name==data['name']).first()
+    if not nameObj:
         return jsonify({'msg': 'name is not exists!', 'code': 470})
-    if name.check_password(data['password']):
-        token = name.generate_auth_token()
-        resp = {'token': token, 'name': name}
+    if nameObj.check_password(data['password']):
+        token = nameObj.generate_auth_token()
+        resp = {'token': token, 'name': data['name']}
         return jsonify({'msg': 'Login success!', 'code': 200, 'data':resp})
 
     return jsonify({'msg': 'Password is error!', 'code': 480})

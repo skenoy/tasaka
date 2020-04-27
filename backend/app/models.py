@@ -32,7 +32,7 @@ def verify_token(token):
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32))
+    name = db.Column(db.String(32), unique=True)
     email = db.Column(db.String(32), index=True, unique=True)
     password = db.Column(db.String(32))
     validatecode = db.Column(db.String(32))

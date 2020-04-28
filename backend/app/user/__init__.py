@@ -12,7 +12,7 @@ def validatecode():
     data = request.json['data']
     emailObj = User.query.filter(User.email==data['email']).first()
     if emailObj:
-        return jsonify({'msg': 'This email is exists!', 'code': 410})
+        return jsonify({'msg': '邮箱已存在！', 'code': 410})
     else:
         code = ''
         while 1:
@@ -30,49 +30,45 @@ def validatecode():
             email('Tasaka邮箱验证', [data['email']], 'sendcode', t_validatecode=code)
         except:
             db.session.rollback()
-            return jsonify({'msg': 'The database is error!', 'code': 420})
-        return jsonify({'msg': 'Send email validate code!', 'code': 200})
+            return jsonify({'msg': '录入数据库错误！', 'code': 420})
+        return jsonify({'msg': '发送邮箱验证码成功！', 'code': 200})
 
 @user.route("/register", methods=['POST'])
 def register():
     data = request.json['data']
-    
-    codeObj = User.query.filter(User.validatecode == data['validatecode']).first()
-    if not codeObj:
-        return jsonify({'msg': 'Email validate code is error!', 'code': 440})
-    emailObj = User.query.filter(User.email == data['email']).first()
-    if not codeObj:
-        return jsonify({'msg': 'Email is error!', 'code': 450})
-    nameObj = User.query.filter(User.name==data['name']).first()
-    if nameObj:
-        return jsonify({'msg': 'name is exists!', 'code': 430})
+    userCode = User.query.filter(User.validatecode == data['validatecode']).first()
+    if not userCode:
+        return jsonify({'msg': '邮箱验证码不存在！', 'code': 490})
+    userName = User.query.filter(User.name==data['username']).first()
+    if userName:
+        return jsonify({'msg': '用户名已存在！', 'code': 430})
+    userEmail = User.query.filter(User.email == data['email']).first()
+    if not userEmail:
+        return jsonify({'msg': '邮箱不存在！', 'code': 450})
+    else:
+        if userEmail.validatecode != data['validatecode']:
+            return jsonify({'msg': '验证码与邮箱不对应！', 'code': 440})
     try:
-        r_user = User()
-        r_user.name = data['name']
-        r_user.email = data['email']
-        r_user.validatecode = data['validatecode']
-        r_user.password = r_user.hash_password(data['password'])
-        db.session.add(r_user)
+        userEmail.name = data['username']
+        userEmail.password = userEmail.hash_password(data['password'])
         db.session.commit()
     except:
         db.session.rollback()
-        return jsonify({'msg': 'Add user fail！', 'code': 460})
-    return jsonify({'msg': 'Add user success！', 'code': 200})
+        return jsonify({'msg': '添加用户失败！', 'code': 460})
+    return jsonify({'msg': '添加用户成功', 'code': 200})
 
 @user.route("/login", methods=['POST'])
 def login():
     data = request.json['data']
 
-    nameObj = User.query.filter(User.name==data['name']).first()
-    if not nameObj:
-        return jsonify({'msg': 'name is not exists!', 'code': 470})
-    if nameObj.check_password(data['password']):
-        token = nameObj.generate_auth_token()
-        resp = {'token': token, 'name': data['name']}
-        return jsonify({'msg': 'Login success!', 'code': 200, 'data':resp})
-
-    return jsonify({'msg': 'Password is error!', 'code': 480})
-
+    userName = User.query.filter(User.name==data['username']).first()
+    if not userName:
+        return jsonify({'msg': '用户名不存在！', 'code': 470})
+    if userName.check_password(data['password']):
+        token = userName.generate_auth_token()
+        resp = {'token': token, 'username': data['username']}
+        return jsonify({'msg': '登陆成功！', 'code': 200, 'data':resp})
+    return jsonify({'msg': '密码错误！', 'code': 480})
 
 @user.route("/check_token")
 @auth.login_required

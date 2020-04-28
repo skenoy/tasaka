@@ -34,7 +34,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), unique=True)
     email = db.Column(db.String(32), index=True, unique=True)
-    password = db.Column(db.String(32))
+    _password = db.Column(db.String(100))
     validatecode = db.Column(db.String(32))
     addtime = db.Column(db.DateTime, index=True, default=datetime.now)
 
@@ -43,10 +43,10 @@ class User(db.Model):
         return str(s.dumps({'vc': self.validatecode}), encoding='utf-8')
     
     def hash_password(self, password):
-        self.password = generate_password_hash(password)
+        self._password = generate_password_hash(password)
 
     def check_password(self, pwd):
-        return check_password_hash(self.password, pwd)
+        return check_password_hash(self._password, pwd)
 
 
 if __name__ == '__main__':

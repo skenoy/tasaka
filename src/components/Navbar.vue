@@ -24,9 +24,15 @@
            :class="currentIndex === index ? 'active' : ''">
         {{item}}
       </div>
-      <el-button size="small"
-                 plain
-                 @click="drawer = true">登陆/注册</el-button>
+      <div v-if="lr_button">
+        <el-button size="small"
+                   plain
+                   @click="drawer = true">登陆/注册</el-button>
+      </div>
+      <div v-else>
+        {{userName}}
+      </div>
+
     </el-col>
     <el-drawer @close="closeDrawer"
                size="75%"
@@ -110,6 +116,8 @@ export default {
     return {
       currentIndex: 0,
       drawer: false,
+      lr_button: true,
+      userName: '',
       lr: ['登陆', '注册'],
       lrIndex: 0,
       lrview: true,
@@ -120,7 +128,7 @@ export default {
       loginRules: {
         username: [
           { required: true, message: '请输入用户名称', trigger: 'blur' },
-          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入用户密码', trigger: 'blur' },
@@ -136,7 +144,7 @@ export default {
       registerRules: {
         username: [
           { required: true, message: '请输入用户名称', trigger: 'blur' },
-          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
         email: [
           { required: true, message: '请输入用户邮箱', trigger: 'blur' },
@@ -154,6 +162,7 @@ export default {
   },
   created () {
     this.currentIndex = window.sessionStorage.getItem('idx')
+    this.checkToken()
   },
   methods: {
     closeDrawer () {
@@ -185,33 +194,54 @@ export default {
     },
     login () {
       this.$refs.loginForm.validate(async valid => {
-        if (!valid) {
-          return null
+        if (!valid) return null
+        const { data: res } = await this.$http.post('user/login', { data: this.loginForm })
+        if (res.code === 200) {
+          this.drawer = false
+          window.sessionStorage.setItem('token', res.data.token)
+          window.sessionStorage.setItem('username', res.data.username)
+          this.lr_button = false
+          this.userName = res.data.username
+          this.$notify({ message: res.msg, type: 'success' })
+        } else {
+          this.$message.warning(res.msg)
         }
-        // const { data: res } = await this.$http.post('user/login', this.form)
-        // if (res.status !== 200) return this.$message.error('密码或用户名称错误！')
-        // this.$message.success('登陆成功！')
-        // window.sessionStorage.setItem('token', res.token)
-        // window.sessionStorage.setItem('name', res.name)
-        // this.$router.push('/home')
       })
     },
     async validateEmail () {
       if (this.registerForm.email) {
         const data = { email: this.registerForm.email }
         const { data: res } = await this.$http.post('user/validatecode', { data })
-        console.log(res)
-        this.$message.success(`已发送验证码到${this.registerForm.email}`)
+        if (res.code === 200) {
+          this.$notify({ message: res.msg, type: 'success' })
+        } else {
+          this.$message.warning(res.msg)
+        }
       } else {
-        this.$message.warning('用户邮箱不能为空')
+        this.$message.warning('用户邮箱不能为空！')
       }
     },
     register () {
       this.$refs.registerForm.validate(async valid => {
-        if (!valid) {
-          return null
+        if (!valid) return null
+        const { data: res } = await this.$http.post('user/register', { data: this.registerForm })
+        if (res.code === 200) {
+          this.$notify({ message: res.msg, type: 'success' })
+          this.drawer = false
+        } else {
+          this.$message.warning(res.msg)
         }
       })
+    },
+    async checkToken () {
+      const { data: res } = await this.$http.get('user/check_token')
+      if (res.code !== 200) {
+        this.lr_button = true
+      } else {
+        this.lr_button = false
+        const name = window.sessionStorage.getItem('username')
+        this.userName = name
+      }
     }
   }
 }

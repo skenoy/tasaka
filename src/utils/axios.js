@@ -36,7 +36,9 @@ function hideLoading () {
 }
 
 axios.interceptors.request.use(config => {
-  showLoading()
+  if (config.url !== 'user/check_token') {
+    showLoading()
+  }
   config.headers.Authorization = 'Token ' + window.sessionStorage.getItem('token')
   return config
 }, error => {

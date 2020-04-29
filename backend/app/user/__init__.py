@@ -1,7 +1,7 @@
 # coding:utf-8
-from flask import Blueprint, jsonify, request, json
+from flask import Blueprint, jsonify, request
 from app.models import User
-from app import auth, db, app
+from app import auth, db
 from uuid import uuid4
 from app.utils import email
 

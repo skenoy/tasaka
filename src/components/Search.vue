@@ -1,5 +1,7 @@
 <template>
-  <el-row :gutter="5" type="flex" justify="center">
+  <el-row :gutter="5"
+          type="flex"
+          justify="center">
     <el-col :xs="10"
             :sm="10"
             :md="12"
@@ -21,6 +23,9 @@
 
 <script>
 export default {
+  props: {
+    dtype: String
+  },
   data () {
     return {
       input: ''
@@ -31,10 +36,15 @@ export default {
       if (this.input === '') {
         return this.$message.warning('请输入查询内容！')
       }
-      // const { data: res } = await this.$http.post('', {
-      //   input: this.input
-      // })
-      this.$emit('search', this.input)
+      const { data: res } = await this.$http.post('query/queryInfo', {
+        input: this.input,
+        type: this.dtype
+      })
+      if (res.code === 400) {
+        this.$message.warning(res.msg)
+      } else {
+        this.$emit('search', res.data)
+      }
     }
   }
 }

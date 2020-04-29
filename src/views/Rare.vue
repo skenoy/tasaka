@@ -1,26 +1,29 @@
 <template>
   <div class="index">
-    <Search @search="handleSearch"></Search>
+    <Search @search="handleSearch"
+            :dtype="disease"></Search>
     <el-table :data="tableData"
               size="medium"
               border
               v-show="showTable">
-      <el-table-column prop="name"
-                       label="项目名称" />
-      <el-table-column prop="bioid"
-                       label="生信编号" />
-      <el-table-column prop="difftime"
-                       label="剩余时间" />
-      <el-table-column prop="ctime"
-                       label="完成时间" />
-      <el-table-column label="附件"
-                       width="50">
+      <el-table-column prop="id" width="50" align="center"
+                       label="ID" />
+      <el-table-column prop="diseasename"
+                       label="疾病名称" />
+      <el-table-column prop="cause"
+                       label="病因" />
+      <el-table-column prop="drug"
+                       label="疾病用药" />
+      <el-table-column prop="approval"
+                       label="批准用药" />
+      <el-table-column label="详细信息" align="center"
+                       width="80">
         <template slot-scope="scope">
-          <el-button size="mini"
-                     :disabled="scope.row.fileurl === ''"
+          <el-button type="success" size="mini" plain
+                     :disabled="scope.row.zhid === ''"
                      icon="el-icon-download"
                      circle
-                     @click="download(scope.row.fileurl)"></el-button>
+                     @click="download(scope.row.zhid)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -37,96 +40,13 @@ export default {
   data () {
     return {
       showTable: false,
-      tableData: [
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        },
-        {
-          name: '1',
-          bioid: '1',
-          difftime: '1',
-          ctime: '1',
-          fileurl: ''
-        }
-      ]
+      tableData: [],
+      disease: 'rare'
     }
   },
   methods: {
-    handleSearch () {
+    handleSearch (childrenData) {
+      this.tableData = childrenData
       this.showTable = true
     }
   }

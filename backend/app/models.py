@@ -48,6 +48,24 @@ class User(db.Model):
     def check_password(self, pwd):
         return check_password_hash(self._password, pwd)
 
+class Rare(db.Model):
+    __tablename__ = "rare"
+    id = db.Column(db.Integer, primary_key=True)
+    zhid = db.Column(db.String(6))
+    diseasename = db.Column(db.String(32), index=True)
+    cause = db.Column(db.String(100), index=True)
+    drug = db.Column(db.String(64), index=True)
+    approval = db.Column(db.String(32))
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'zhid': f'app/files/hanjian/{self.zhid}.pdf',
+            'diseasename': self.diseasename,
+            'cause': self.cause,
+            'drug': self.drug,
+            'approval': self.approval
+        }
 
 if __name__ == '__main__':
     db.create_all()

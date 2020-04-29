@@ -1,6 +1,6 @@
 import axios from 'axios'
 const instance = axios.create({
-  baseURL: 'http://test.sunboyan.cn:1001/api/',
+  baseURL: 'https://test.sunboyan.cn/api/',
   headers: { 'Content-Type': 'application/json; application/octet-stream' },
   responseType: 'blob'
 })

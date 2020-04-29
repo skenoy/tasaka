@@ -1,7 +1,6 @@
 import axios from 'axios'
 import Vue from 'vue'
-// 小程序里面可以https调用，但其他时候只能用http
-axios.defaults.baseURL = 'http://test.sunboyan.cn:1001/api/'
+axios.defaults.baseURL = 'https://test.sunboyan.cn/api/'
 
 let loading
 

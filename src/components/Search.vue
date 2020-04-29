@@ -36,15 +36,19 @@ export default {
       if (this.input === '') {
         return this.$message.warning('请输入查询内容！')
       }
-      const { data: res } = await this.$http.post('query/queryInfo', {
+      await this.$http.post('query/queryInfo', {
         input: this.input,
         type: this.dtype
+      }).then(response => {
+        const { data: res } = response
+        if (res.code === 400) {
+          this.$message.warning(res.msg)
+        } else {
+          this.$emit('search', res.data)
+        }
+      }).catch(() => {
+        this.$message.warning('请登录之后搜索！')
       })
-      if (res.code === 400) {
-        this.$message.warning(res.msg)
-      } else {
-        this.$emit('search', res.data)
-      }
     }
   }
 }

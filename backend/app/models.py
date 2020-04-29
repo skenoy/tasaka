@@ -60,7 +60,7 @@ class Rare(db.Model):
     def to_json(self):
         return {
             'id': self.id,
-            'zhid': f'app/files/hanjian/{self.zhid}.pdf',
+            'zhid': f'{self.zhid}.pdf',
             'diseasename': self.diseasename,
             'cause': self.cause,
             'drug': self.drug,

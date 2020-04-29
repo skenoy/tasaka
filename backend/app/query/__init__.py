@@ -1,5 +1,5 @@
 # coding:utf-8
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_from_directory
 from app.models import Rare
 from app import auth, db
 from sqlalchemy import or_
@@ -18,3 +18,12 @@ def queryInfo():
             return jsonify({'msg': '获取成功！', 'code': 200, 'data': resjson})
         return jsonify({'msg': '没有找到数据！', 'code': 400})
     return jsonify({'msg': 'aaaa', 'code': 200})
+
+@query.route('/download', methods=['POST'])
+@auth.login_required
+def download():
+    dfile = request.json['file']
+    ftype = request.json['type']
+    dirname = f'/opt/tasaka/flask/app/files/{ftype}/'
+
+    return send_from_directory(dirname, dfile, as_attachment=True)

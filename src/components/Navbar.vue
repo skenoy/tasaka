@@ -202,7 +202,7 @@ export default {
           window.sessionStorage.setItem('username', res.data.username)
           this.lr_button = false
           this.userName = res.data.username
-          this.$notify({ message: res.msg, type: 'success' })
+          this.$notify({ message: res.msg, type: 'success', position: 'bottom-right' })
         } else {
           this.$message.warning(res.msg)
         }
@@ -213,7 +213,7 @@ export default {
         const data = { email: this.registerForm.email }
         const { data: res } = await this.$http.post('user/validatecode', { data })
         if (res.code === 200) {
-          this.$notify({ message: res.msg, type: 'success' })
+          this.$notify({ message: res.msg, type: 'success', position: 'bottom-right' })
         } else {
           this.$message.warning(res.msg)
         }
@@ -226,7 +226,7 @@ export default {
         if (!valid) return null
         const { data: res } = await this.$http.post('user/register', { data: this.registerForm })
         if (res.code === 200) {
-          this.$notify({ message: res.msg, type: 'success' })
+          this.$notify({ message: res.msg, type: 'success', position: 'bottom-right' })
           this.drawer = false
         } else {
           this.$message.warning(res.msg)

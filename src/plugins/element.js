@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Button, Row, Col, Drawer, Form, FormItem, Input, Icon, Message, Table, TableColumn, Notification } from 'element-ui'
+import { Button, Row, Col, Drawer, Form, FormItem, Input, Icon, Message, Table, TableColumn, Notification, Loading } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Row)
@@ -14,3 +14,5 @@ Vue.use(TableColumn)
 
 Vue.prototype.$message = Message
 Vue.prototype.$notify = Notification
+
+Vue.prototype.$loading = Loading.service

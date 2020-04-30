@@ -2,7 +2,8 @@
   <div class="index">
     <div class="main">肿瘤/罕见病治疗案例</div>
     <div class="sub">来源--知乎-杀生丸--解读案例</div>
-    <div class="sub">不对其疫情中的蠢话做评价</div>
+    <div class="sub">1M小水管。。。每天5次搜索，12:00重置？？？</div>
+    <div class="sub">不管其为人行事，仅学习其知识</div>
     <div class="number">
       <div>肿瘤数据：<span>{{cancerNumberTween}}</span></div>
       <div>罕见病数据：<span>{{rareNumberTween}}</span></div>
@@ -55,7 +56,7 @@ div {
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  margin-top: 5%;
+  margin-top: 3%;
   font-size: 24px;
 }
 .number span {

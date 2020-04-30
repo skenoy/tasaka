@@ -4,7 +4,7 @@
     <div class="frond">前端：<span>Vue</span><span>VueCli</span><span>Element</span><span>TweenJS</span><span>Axios</span></div>
     <div class="back">后端：<span>Linux</span><span>Nginx</span><span>Gunicorn</span><span>Flask</span><span>Mysql</span><span>&nbsp;</span></div>
     <div class="spider">预先爬虫：<span>pyppeteer</span><span>lxml</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>
-    <div class="developer">开发者详情，请从域名中寻找...<br>1M的带宽，请耐心等待...<br><span>https://sunboyan.cn</span></div>
+    <div class="developer">开发者详情，请从域名中寻找...<br><span>https://sunboyan.cn</span></div>
   </div>
 </template>
 

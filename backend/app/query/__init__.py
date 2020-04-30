@@ -1,6 +1,6 @@
 # coding:utf-8
-from flask import Blueprint, jsonify, request, send_from_directory
-from app.models import Rare
+from flask import Blueprint, jsonify, request, send_from_directory, g
+from app.models import Rare, User
 from app import auth, db
 from sqlalchemy import or_
 
@@ -9,6 +9,11 @@ query = Blueprint('query', __name__)
 @query.route("/queryInfo", methods=['POST'])
 @auth.login_required
 def queryInfo():
+    user = User.query.filter(User.name == g.current_user).first()
+    if user.snumber == 0:
+        return jsonify({'msg': '搜索次数已使用完！', 'code': 0})
+    user.snumber -= 1
+    db.session.commit()
     inputStr = request.json['input'].strip()
     diseaseType = request.json['type']
     if diseaseType == 'rare':
@@ -17,7 +22,6 @@ def queryInfo():
             resjson = [i.to_json() for i in res]
             return jsonify({'msg': '获取成功！', 'code': 200, 'data': resjson})
         return jsonify({'msg': '没有找到数据！', 'code': 400})
-    return jsonify({'msg': 'aaaa', 'code': 200})
 
 @query.route('/download', methods=['POST'])
 @auth.login_required

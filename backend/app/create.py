@@ -38,4 +38,6 @@ if __name__ == '__main__':
     #         db.session.add(rare)
     #         db.session.commit()
     
+    User.query.update({'snumber': 5})
+    db.session.commit()
 

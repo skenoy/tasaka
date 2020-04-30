@@ -43,8 +43,10 @@ export default {
         const { data: res } = response
         if (res.code === 400) {
           this.$message.warning(res.msg)
-        } else {
+        } else if (res.code === 200) {
           this.$emit('search', res.data)
+        } else {
+          this.$message.warning(res.msg)
         }
       }).catch(() => {
         this.$message.warning('请登录之后搜索！')

@@ -5,13 +5,13 @@ from flask_cors import CORS
 from flask_mail import Mail
 
 app = Flask(__name__)
-CORS(app)
-
 app.config.from_pyfile('./config.py')
 
+CORS(app)
 mail = Mail(app)
-db = SQLAlchemy(app)
-
+db = SQLAlchemy()
+db.app = app
+db.init_app(app)
 auth = HTTPTokenAuth(scheme='Token')
 
 # 所有对象要在注册之前初始化，否则找不到该对象

@@ -36,6 +36,7 @@ class User(db.Model):
     email = db.Column(db.String(32), index=True, unique=True)
     _password = db.Column(db.String(100))
     validatecode = db.Column(db.String(32))
+    snumber = db.Column(db.Integer, default=5)
     addtime = db.Column(db.DateTime, index=True, default=datetime.now)
 
     def generate_auth_token(self):

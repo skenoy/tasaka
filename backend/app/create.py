@@ -17,6 +17,7 @@ class User(db.Model):
     email = db.Column(db.String(32), index=True, unique=True)
     _password = db.Column(db.String(100))
     validatecode = db.Column(db.String(32))
+    snumber = db.Column(db.Integer, default=5)
     addtime = db.Column(db.DateTime, index=True, default=datetime.now)
   
 class Rare(db.Model):
@@ -30,10 +31,11 @@ class Rare(db.Model):
 
 if __name__ == '__main__':
     db.create_all()
-    with open(argv[1]) as rarefile:
-        for i in rarefile:
-            tmp = i.split()
-            rare = Rare(zhid=tmp[0], diseasename=tmp[1], cause=tmp[2], drug=tmp[3], approval=tmp[4])
-            db.session.add(rare)
-            db.session.commit()
+    # with open(argv[1]) as rarefile:
+    #     for i in rarefile:
+    #         tmp = i.split()
+    #         rare = Rare(zhid=tmp[0], diseasename=tmp[1], cause=tmp[2], drug=tmp[3], approval=tmp[4])
+    #         db.session.add(rare)
+    #         db.session.commit()
+    
 

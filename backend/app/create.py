@@ -35,9 +35,10 @@ class Cancer(db.Model):
     zhid = db.Column(db.String(6))
     diseasename = db.Column(db.String(32), index=True)
     geneother = db.Column(db.String(32), index=True)
+    gene_type = db.Column(db.String(32))
     sample = db.Column(db.String(32))
     sample_approval = db.Column(db.String(32))
-    drug = db.Column(db.String(32), index=True)
+    drug = db.Column(db.String(100), index=True)
     drup_effect = db.Column(db.String(32))
     nation_approval = db.Column(db.String(32))
     other = db.Column(db.String(100))
@@ -51,12 +52,12 @@ if __name__ == '__main__':
     #         db.session.add(rare)
     #         db.session.commit()
 
-    with open(argv[1]) as cancerfile:
-        for i in cancerfile:
-            tmp = i.split()
-            cancer = Rare(zhid=tmp[0], diseasename=tmp[1], geneother=tmp[2], gene_type=tmp[3], sample=tmp[4], sample_approval=tmp[5], drug=tmp[6], drup_effect=tmp[7], nation_approval=tmp[8], other=tmp[9])
-            db.session.add(cancer)
-            db.session.commit()
+    # with open(argv[1]) as cancerfile:
+    #     for i in cancerfile:
+    #         tmp = i.split()
+    #         cancer = Rare(zhid=tmp[0], diseasename=tmp[1], geneother=tmp[2], gene_type=tmp[3], sample=tmp[4], sample_approval=tmp[5], drug=tmp[6], drup_effect=tmp[7], nation_approval=tmp[8], other=tmp[9])
+    #         db.session.add(cancer)
+    #         db.session.commit()
     
     # User.query.update({'snumber': 5})
     # db.session.commit()

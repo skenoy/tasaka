@@ -69,5 +69,34 @@ class Rare(db.Model):
             'approval': self.approval
         }
 
+class Cancer(db.Model):
+    __tablename__ = "cancer"
+    id = db.Column(db.Integer, primary_key=True)
+    zhid = db.Column(db.String(6))
+    diseasename = db.Column(db.String(32), index=True)
+    geneother = db.Column(db.String(32), index=True)
+    gene_type = db.Column(db.String(32))
+    sample = db.Column(db.String(32))
+    sample_approval = db.Column(db.String(32))
+    drug = db.Column(db.String(100), index=True)
+    drup_effect = db.Column(db.String(32))
+    nation_approval = db.Column(db.String(32))
+    other = db.Column(db.String(100))
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'zhid': f'{self.zhid}.pdf',
+            'diseasename': self.diseasename,
+            'geneother': self.geneother,
+            'gene_type': self.gene_type,
+            'sample': self.sample,
+            'sample_approval': self.sample_approval,
+            'drug': self.drug,
+            'drup_effect': self.drup_effect,
+            'nation_approval': self.nation_approval,
+            'other': self.other
+        }
+
 if __name__ == '__main__':
     db.create_all()

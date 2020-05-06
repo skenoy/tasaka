@@ -44,10 +44,10 @@ export default {
         if (res.code === 400) {
           this.$message.warning(res.msg)
         } else if (res.code === 200) {
-          window.sessionStorage.setItem('snumber', res.snumber)
+          this.$message.warning(`剩余搜索次数为：${res.snumber}`)
           this.$emit('search', res.data)
         } else {
-          window.sessionStorage.setItem('snumber', res.snumber)
+          this.$message.warning(`剩余搜索次数为：${res.snumber}`)
           this.$message.warning(res.msg)
         }
       }).catch(() => {

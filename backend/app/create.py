@@ -47,14 +47,14 @@ if __name__ == '__main__':
     db.create_all()
     # with open(argv[1]) as rarefile:
     #     for i in rarefile:
-    #         tmp = i.split()
+    #         tmp = i.strip().split()
     #         rare = Rare(zhid=tmp[0], diseasename=tmp[1], cause=tmp[2], drug=tmp[3], approval=tmp[4])
     #         db.session.add(rare)
     #         db.session.commit()
 
     # with open(argv[1]) as cancerfile:
     #     for i in cancerfile:
-    #         tmp = i.split()
+    #         tmp = i.strip().split()
     #         cancer = Rare(zhid=tmp[0], diseasename=tmp[1], geneother=tmp[2], gene_type=tmp[3], sample=tmp[4], sample_approval=tmp[5], drug=tmp[6], drup_effect=tmp[7], nation_approval=tmp[8], other=tmp[9])
     #         db.session.add(cancer)
     #         db.session.commit()

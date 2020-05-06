@@ -30,7 +30,7 @@
                    @click="drawer = true">登陆/注册</el-button>
       </div>
       <div v-else>
-        {{userName}}-{{snumber}}
+        {{userName}}
       </div>
 
     </el-col>
@@ -117,7 +117,6 @@ export default {
       currentIndex: 0,
       drawer: false,
       lr_button: true,
-      snumber: 0,
       userName: '',
       lr: ['登陆', '注册'],
       lrIndex: 0,
@@ -164,7 +163,6 @@ export default {
   created () {
     this.currentIndex = window.sessionStorage.getItem('idx')
     this.checkToken()
-    this.snumber = window.sessionStorage.getItem('snumber')
   },
   methods: {
     closeDrawer () {
@@ -202,7 +200,7 @@ export default {
           this.drawer = false
           window.sessionStorage.setItem('token', res.data.token)
           window.sessionStorage.setItem('username', res.data.username)
-          window.sessionStorage.setItem('snumber', res.data.snumber)
+          this.$message.warning(`剩余搜索次数为：${res.data.snumber}`)
           this.lr_button = false
           this.userName = res.data.username
           this.snumber = res.data.snumber

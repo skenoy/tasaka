@@ -1,6 +1,6 @@
 # coding:utf-8
 from flask import Blueprint, jsonify, request, send_from_directory, g
-from app.models import Rare, User
+from app.models import Rare, User, Cancer
 from app import auth, db
 from sqlalchemy import or_
 
@@ -22,6 +22,13 @@ def queryInfo():
             resjson = [i.to_json() for i in res]
             return jsonify({'msg': '获取成功！', 'code': 200, 'data': resjson, 'snumber': user.snumber})
         return jsonify({'msg': '没有找到数据！', 'code': 400})
+    if diseaseType == 'cancer':
+        res = Cancer.query.filter(or_(Cancer.diseasename.contains(inputStr), Cancer.geneother.contains(inputStr), Cancer.drug.contains(inputStr))).all()
+        if res:
+            resjson = [i.to_json() for i in res]
+            return jsonify({'msg': '获取成功！', 'code': 200, 'data': resjson, 'snumber': user.snumber})
+        return jsonify({'msg': '没有找到数据！', 'code': 400})
+
 
 @query.route('/download', methods=['POST'])
 @auth.login_required

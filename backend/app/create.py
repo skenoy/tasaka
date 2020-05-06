@@ -54,7 +54,7 @@ if __name__ == '__main__':
     with open(argv[1]) as cancerfile:
         for i in cancerfile:
             tmp = i.split()
-            cancer = Rare(zhid=tmp[0], diseasename=tmp[1], geneother=tmp[2], sample=tmp[3], sample_approval=tmp[4], drug=tmp[5], drup_effect=tmp[6], nation_approval=tmp[7], other=tmp[8])
+            cancer = Rare(zhid=tmp[0], diseasename=tmp[1], geneother=tmp[2], gene_type=tmp[3], sample=tmp[4], sample_approval=tmp[5], drug=tmp[6], drup_effect=tmp[7], nation_approval=tmp[8], other=tmp[9])
             db.session.add(cancer)
             db.session.commit()
     

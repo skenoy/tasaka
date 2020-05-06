@@ -205,6 +205,7 @@ export default {
           window.sessionStorage.setItem('snumber', res.data.snumber)
           this.lr_button = false
           this.userName = res.data.username
+          this.snumber = res.data.snumber
           this.$notify({ message: res.msg, type: 'success', position: 'bottom-right' })
         } else {
           this.$message.warning(res.msg)

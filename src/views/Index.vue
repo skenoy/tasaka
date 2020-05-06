@@ -5,8 +5,9 @@
     <div class="sub">1M小水管。。。每天5次搜索，12:00重置？？？</div>
     <div class="sub">不管其为人行事，仅学习其知识</div>
     <div class="number">
-      <div>肿瘤数据：<span>{{cancerNumberTween}}</span></div>
-      <div>罕见病数据：<span>{{rareNumberTween}}</span></div>
+      <!-- <div>肿瘤数据：<span>{{cancerNumberTween}}</span></div> -->
+      <div>肿瘤数据：<span>{{cancerNumberTween}}</span><br>进度：140/1010</div>
+      <div>罕见病数据：<span>{{rareNumberTween}}</span><br>进度：120/120</div>
     </div>
   </div>
 </template>
@@ -22,7 +23,7 @@ export default {
     }
   },
   mounted () {
-    this.cancerNumber = 1100
+    this.cancerNumber = 39
     this.rareNumber = 36
   },
   mixins: [

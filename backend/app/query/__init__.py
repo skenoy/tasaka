@@ -11,7 +11,7 @@ query = Blueprint('query', __name__)
 def queryInfo():
     user = User.query.filter(User.name == g.current_user).first()
     if user.snumber == 0:
-        return jsonify({'msg': '搜索次数已使用完！', 'code': 0})
+        return jsonify({'msg': '搜索次数已使用完！', 'code': 0, 'snumber': 0})
     user.snumber -= 1
     db.session.commit()
     inputStr = request.json['input'].strip()
@@ -20,7 +20,7 @@ def queryInfo():
         res = Rare.query.filter(or_(Rare.diseasename.contains(inputStr), Rare.cause.contains(inputStr), Rare.drug.contains(inputStr))).all()
         if res:
             resjson = [i.to_json() for i in res]
-            return jsonify({'msg': '获取成功！', 'code': 200, 'data': resjson})
+            return jsonify({'msg': '获取成功！', 'code': 200, 'data': resjson, 'snumber': user.snumber})
         return jsonify({'msg': '没有找到数据！', 'code': 400})
 
 @query.route('/download', methods=['POST'])

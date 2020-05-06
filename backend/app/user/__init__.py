@@ -66,7 +66,7 @@ def login():
         return jsonify({'msg': '用户名不存在！', 'code': 470})
     if userName.check_password(data['password']):
         token = userName.generate_auth_token()
-        resp = {'token': token, 'username': data['username']}
+        resp = {'token': token, 'username': data['username'], 'snumber': userName.snumber}
         return jsonify({'msg': '登陆成功！', 'code': 200, 'data':resp})
     return jsonify({'msg': '密码错误！', 'code': 480})
 

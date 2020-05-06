@@ -29,6 +29,19 @@ class Rare(db.Model):
     drug = db.Column(db.String(64), index=True)
     approval = db.Column(db.String(32))
 
+class Cancer(db.Model):
+    __tablename__ = "cancer"
+    id = db.Column(db.Integer, primary_key=True)
+    zhid = db.Column(db.String(6))
+    diseasename = db.Column(db.String(32), index=True)
+    geneother = db.Column(db.String(32), index=True)
+    sample = db.Column(db.String(32))
+    sample_approval = db.Column(db.String(32))
+    drug = db.Column(db.String(32), index=True)
+    drup_effect = db.Column(db.String(32))
+    nation_approval = db.Column(db.String(32))
+    other = db.Column(db.String(100))
+
 if __name__ == '__main__':
     db.create_all()
     # with open(argv[1]) as rarefile:
@@ -37,7 +50,14 @@ if __name__ == '__main__':
     #         rare = Rare(zhid=tmp[0], diseasename=tmp[1], cause=tmp[2], drug=tmp[3], approval=tmp[4])
     #         db.session.add(rare)
     #         db.session.commit()
+
+    with open(argv[1]) as cancerfile:
+        for i in cancerfile:
+            tmp = i.split()
+            cancer = Rare(zhid=tmp[0], diseasename=tmp[1], geneother=tmp[2], sample=tmp[3], sample_approval=tmp[4], drug=tmp[5], drup_effect=tmp[6], nation_approval=tmp[7], other=tmp[8])
+            db.session.add(cancer)
+            db.session.commit()
     
-    User.query.update({'snumber': 5})
-    db.session.commit()
+    # User.query.update({'snumber': 5})
+    # db.session.commit()
 

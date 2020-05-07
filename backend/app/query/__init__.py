@@ -10,7 +10,7 @@ query = Blueprint('query', __name__)
 @auth.login_required
 def queryInfo():
     user = User.query.filter(User.name == g.current_user).first()
-    if user.snumber == 0:
+    if user.snumber == 0 and user.email not in ['xuzijing86@163.com', 'sunyong@microanaly.com']:
         return jsonify({'msg': '搜索次数已使用完！', 'code': 0, 'snumber': 0})
     user.snumber -= 1
     db.session.commit()

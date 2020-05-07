@@ -50,7 +50,7 @@
                label-position="left"
                v-show="lrview">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username"
+          <el-input v-model.trim="loginForm.username"
                     prefix-icon="el-icon-user"
                     placeholder="用户名称" />
         </el-form-item>
@@ -73,17 +73,17 @@
                label-position="left"
                v-show="!lrview">
         <el-form-item prop="username">
-          <el-input v-model="registerForm.username"
+          <el-input v-model.trim="registerForm.username"
                     prefix-icon="el-icon-user"
                     placeholder="用户名称" />
         </el-form-item>
         <el-form-item prop="email">
-          <el-input v-model="registerForm.email"
+          <el-input v-model.trim="registerForm.email"
                     prefix-icon="el-icon-message"
                     placeholder="用户邮箱" />
         </el-form-item>
         <el-form-item prop="validatecode">
-          <el-input v-model="registerForm.validatecode"
+          <el-input v-model.trim="registerForm.validatecode"
                     prefix-icon="el-icon-key"
                     placeholder="邮箱验证码" />
         </el-form-item>

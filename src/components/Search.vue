@@ -7,7 +7,7 @@
             :md="12"
             :lg="16"
             :xl="18">
-      <el-input v-model="input"
+      <el-input v-model.trim="input"
                 placeholder="基因 / 疾病 / 药物"
                 prefix-icon="el-icon-search"
                 @keyup.enter.native="search">
@@ -35,6 +35,8 @@ export default {
     async search () {
       if (this.input === '') {
         return this.$message.warning('请输入查询内容！')
+      } else if (this.input.length === 1) {
+        return this.$message.warning('请输入至少两个字符！')
       }
       await this.$http.post('query/queryInfo', {
         input: this.input,

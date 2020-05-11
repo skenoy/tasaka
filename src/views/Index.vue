@@ -6,7 +6,7 @@
     <div class="sub">不管其为人行事，仅学习其知识</div>
     <div class="number">
       <!-- <div>肿瘤数据：<span>{{cancerNumberTween}}</span></div> -->
-      <div>肿瘤数据：<span>{{cancerNumberTween}}</span><br>进度：310/1010</div>
+      <div>肿瘤数据：<span>{{cancerNumberTween}}</span><br>进度：700/1010</div>
       <div>罕见病数据：<span>{{rareNumberTween}}</span><br>进度：120/120</div>
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
     }
   },
   mounted () {
-    this.cancerNumber = 61
+    this.cancerNumber = 89
     this.rareNumber = 36
   },
   mixins: [
